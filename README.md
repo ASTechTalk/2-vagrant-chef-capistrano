@@ -4,7 +4,7 @@ vagrant-chef-capistrano
 第２回 ASTechTalkで発表したDemo
 
 # 内容
-[Vagrantでbootして、chef-soloでprovisionして、serverspecでテストして、capistranoでdeployしてみた](https://docs.google.com/presentation/d/1j_LR7AV6Zdbn3iP-XiKBJ1svkSakyOpCvATsbYjW1GA/edit?usp=sharing, "資料")
+[Vagrantでbootして、chef-soloでprovisionして、serverspecでtestして、capistranoでdeployしてみた](https://docs.google.com/presentation/d/1j_LR7AV6Zdbn3iP-XiKBJ1svkSakyOpCvATsbYjW1GA/edit?usp=sharing, "資料")
 (デモ失敗したので、アプリの画面追加)
 
 # 参考
