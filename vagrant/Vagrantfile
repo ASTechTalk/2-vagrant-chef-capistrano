@@ -1,0 +1,117 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  # Every Vagrant virtual environment requires a box to build off of.
+
+  box_name = "dummy"
+  ssh_user = "ubuntu"
+
+  config.vm.boot_timeout = 3600
+  config.omnibus.chef_version = :latest
+  config.berkshelf.enabled = false
+
+  config.vm.define :local do |local|
+    local.vm.box = "chef/ubuntu-13.10"
+    local.vm.hostname = "local-server"
+    local.ssh.username = "vagrant"
+    local.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+
+    local.vm.provision "chef_solo" do |chef|
+      set_node_server_run_list chef
+    end
+  end
+
+  server_info = { 'beacon-monitor01'=> 'ip addr',
+                  'beacon-monitor02'=> 'ip addr'}
+  server_info.each do |name, eip|
+    config.vm.define name.to_sym do |monitor|
+      monitor.vm.box = box_name
+      monitor.ssh.username = ssh_user
+
+      monitor.vm.provider :aws do |aws, override|
+        aws = init_aws aws
+        aws.availability_zone = "ap-northeast-1a"
+        aws.instance_type = "m1.small"
+        aws.ami = "ami-bddaa2bc"
+        aws.security_groups = ["security group name"]
+        aws.keypair_name = "key pair name"
+        aws.tags = { 
+          'Name' => name
+        }
+        override.ssh.private_key_path = "~/.ssh/private_key.pem"
+
+      end
+
+      monitor.vm.provision "chef_solo" do |chef|
+        chef = set_node_server_run_list chef, eip
+        chef.json['set_fqdn'] = name
+      end
+    end
+  end
+
+
+  config.vm.define :redis_mongo_server do |db|
+    db.vm.box = box_name
+    db.ssh.username = ssh_user
+
+    db.vm.provider :aws do |aws, override|
+      aws = init_aws aws
+      aws.availability_zone = "ap-northeast-1a"
+      aws.instance_type = "m1.small"
+      aws.ami = "ami-bddaa2bc"
+      aws.security_groups = ["security group name"]
+      aws.keypair_name = "key pair name"
+      aws.tags = { 
+        'Name' => "redis-mongo-server",
+      }
+      override.ssh.private_key_path = "~/.ssh/private_key.pem"
+
+    end
+
+    config.vm.provision "chef_solo" do |chef|
+      chef = init_chef chef
+
+      chef.run_list = [ 'role[mongodb-server]', 'role[redis-server]', 'ec2::associate_eip' ]
+      chef.json = { aws: { eip: 'db server ip' }}
+    end
+  end
+
+  def init_chef chef
+    chef_repo_root = ENV['CHEF_REPO_ROOT']
+    chef.custom_config_path = "#{chef_repo_root}/Vagrantfile.chef"
+    chef.cookbooks_path = ["#{chef_repo_root}/cookbooks", "#{chef_repo_root}/site-cookbooks"]
+    chef.data_bags_path = "#{chef_repo_root}/data_bags"
+    chef.roles_path = ["#{chef_repo_root}/roles"]
+    chef
+  end
+
+  def init_aws aws
+    aws_config = YAML.load(File.read("#{ENV['HOME']}/aws-script/conf.yml"))
+    aws.access_key_id = aws_config['api_conf']['access_key_id']
+    aws.secret_access_key = aws_config['api_conf']['secret_access_key']
+    aws.region = "ap-northeast-1"
+    aws
+  end
+
+  def set_node_server_run_list chef, eip = nil
+    chef = init_chef chef
+    chef.run_list = ["role[node-server]"]
+
+    if eip
+      chef.run_list << 'ec2::associate_eip'
+      chef.json[:aws] = { eip: eip }
+    end
+    chef
+  end
+
+end

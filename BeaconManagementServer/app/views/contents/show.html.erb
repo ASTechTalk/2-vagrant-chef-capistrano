@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Uuid:</strong>
+  <%= @content.uuid %>
+</p>
+
+<p>
+  <strong>Minor:</strong>
+  <%= @content.minor %>
+</p>
+
+<p>
+  <strong>Major:</strong>
+  <%= @content.major %>
+</p>
+
+<p>
+  <strong>Identifier:</strong>
+  <%= @content.identifier %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @content.name %>
+</p>
+
+<p>
+  <strong>Image data:</strong>
+  <img src="data:image/png;base64,<%= @content.image_data %>">
+</p>
+
+<%= link_to 'Edit', edit_content_path(@content) %> 
+<%= link_to 'Back', contents_path %>

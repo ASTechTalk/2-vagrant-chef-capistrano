@@ -1,0 +1,30 @@
+// Place all the styles related to the Contents controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+th {
+  padding-right: 10px !important;
+  font-size: 1.5em;
+  text-align: center;
+}
+td {
+  height: 110px;
+  padding-right: 10px !important;
+  text-align: center;
+}
+
+tbody > tr:nth-child(odd) {
+  background-color: #FBF7FC;
+}
+
+img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.btn {
+  margin: 5px 5px 5px 5px;
+}
+
+div.actions {
+  float:left;
+}

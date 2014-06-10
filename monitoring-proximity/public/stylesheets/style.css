@@ -1,0 +1,41 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+div.container{
+  width: 80%;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align:center;
+}
+
+a {
+  color: #00B7FF;
+}
+
+img {
+  height: 20%;
+  max-width: 60%
+}
+
+img.immediate {
+  height: 100%;
+}
+
+img.near {
+  height: 60%;
+}
+
+img.far {
+  height: 20%;
+}
+
+li {
+  height: 500px;
+  width: 100%;
+  float: left;
+  list-style-type: none;
+}
+

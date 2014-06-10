@@ -1,0 +1,25 @@
+{
+  "name":"node-server",
+  "chef_type": "role",
+  "json_class":"Chef::Role",
+  "default_attributes":{
+    "nodebrew": {
+      "nodes": [{ "version": "0.10.28", "binary": true }],
+      "use": "0.10.28",
+      "npm": {
+        "0.10.28": ["forever"]
+      },
+      "user": "ubuntu"
+    }
+  },
+  "override_attributes":{},
+  "description":"node-server's role",
+  "run_list": [
+        "recipe[hostname]",
+        "recipe[apt]",
+        "recipe[vim]",
+        "recipe[git]",
+        "recipe[build-essential]",
+        "recipe[nodebrew]"
+        ]
+}

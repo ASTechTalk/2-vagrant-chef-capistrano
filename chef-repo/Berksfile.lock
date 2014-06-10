@@ -1,0 +1,77 @@
+DEPENDENCIES
+  apt
+  aws
+  build-essential
+  git
+  hostname
+  install_from
+  metachef
+  mongodb
+  nginx
+  nodebrew
+  openssl
+  rbenv
+  redisio
+  runit
+  vim
+
+GRAPH
+  apt (2.4.0)
+  aws (2.2.2)
+  bluepill (2.3.1)
+    rsyslog (>= 0.0.0)
+  build-essential (2.0.2)
+  chef_handler (1.1.6)
+  dmg (2.2.0)
+  git (4.0.2)
+    build-essential (>= 0.0.0)
+    dmg (>= 0.0.0)
+    runit (>= 1.0.0)
+    windows (>= 0.0.0)
+    yum (~> 3.0)
+    yum-epel (>= 0.0.0)
+  hostname (0.3.0)
+    hostsfile (>= 0.0.0)
+  hostsfile (2.4.4)
+  install_from (3.0.4)
+  metachef (3.0.4)
+  mongodb (0.16.0)
+    apt (>= 1.8.2)
+    python (>= 0.0.0)
+    runit (>= 1.5.0)
+    yum (>= 3.0)
+  nginx (2.7.0)
+    apt (~> 2.2)
+    bluepill (~> 2.3)
+    build-essential (~> 2.0)
+    ohai (~> 2.0)
+    runit (~> 1.2)
+    yum-epel (~> 0.3)
+  nodebrew (0.1.0)
+    apt (>= 0.0.0)
+    build-essential (>= 0.0.0)
+    git (>= 0.0.0)
+  ohai (2.0.0)
+  openssl (1.1.0)
+  python (1.4.6)
+    build-essential (>= 0.0.0)
+    yum-epel (>= 0.0.0)
+  rbenv (1.7.1)
+    apt (>= 0.0.0)
+    build-essential (>= 0.0.0)
+    git (>= 0.0.0)
+    ohai (>= 1.1)
+  redisio (1.7.1)
+    ulimit (>= 0.1.2)
+  rsyslog (1.12.2)
+  runit (1.5.10)
+    build-essential (>= 0.0.0)
+    yum (~> 3.0)
+    yum-epel (>= 0.0.0)
+  ulimit (0.3.2)
+  vim (1.1.2)
+  windows (1.31.0)
+    chef_handler (>= 0.0.0)
+  yum (3.2.0)
+  yum-epel (0.3.6)
+    yum (~> 3.0)

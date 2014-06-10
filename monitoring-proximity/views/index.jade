@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  .container
+      h1= title
+      p#message
+
+      ul#face-image-list
+
+  script(src="/socket.io/socket.io.js")
+  script(type='text/javascript').
+    var message = { 
+                    'immediate': ' がかなり近くにいます',
+                    'near': ' が近くにいます',
+                    'far': ' が遠くにいます',
+                    'notfound': ' の霊圧が、、消えた'
+    };
+    var socket = io.connect('http://' + location.host + '/monitor');
+    var ul = document.getElementById('face-image-list');
+
+    socket.on('message', function (data) {
+        var li = document.getElementById(data.id);
+        var p = document.getElementById("message");
+        if(li !== null){
+            var img = li.childNodes[0];
+            if(data.image_data){
+                p.innerHTML = data.name + message[data.proximity];
+                img.src = "data:image/png;base64," + data.image_data;
+                img.className = data.proximity;
+                return;
+            } else {
+                li.remove();
+                p.innerHTML = data.name + message['notfound'];
+            }
+        } 
+
+        if(data.image_data){
+            p.innerHTML = data.name + message[data.proximity];
+            var li = document.createElement('li');
+            li.id = data.id;
+            var html = '<img class="' + data.proximity + '" src="data:image/png;base64,' + data.image_data + '">';
+            li.innerHTML = html;
+            ul.appendChild(li);
+            return;
+        }
+    });
+      

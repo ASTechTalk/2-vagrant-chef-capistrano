@@ -1,0 +1,39 @@
+<h1>Listing contents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Uuid</th>
+      <th>Minor</th>
+      <th>Major</th>
+      <th>x</th>
+      <th>y</th>
+      <th>Identifier</th>
+      <th>Name</th>
+      <th>Image data</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contents.each do |content| %>
+      <tr>
+        <td><%= content.uuid %></td>
+        <td><%= content.minor %></td>
+        <td><%= content.major %></td>
+        <td><%= content.x %></td>
+        <td><%= content.y %></td>
+        <td><%= content.identifier %></td>
+        <td><%= content.name %></td>
+        <td><img src="data:image/png;base64,<%= content.image_data %>"></td>
+        <td><%= link_to 'Show', content, {class:%w(btn btn-default)} %></td>
+        <td><%= link_to 'Edit', edit_content_path(content), {class:%w(btn btn-default)} %></td>
+        <td><%= link_to 'Destroy', content, method: :delete, data: { confirm: 'Are you sure?' }, class:%w(btn btn-danger) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Content', new_content_path, {class:["btn", "btn-primary"]} %>

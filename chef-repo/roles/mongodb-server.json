@@ -1,0 +1,14 @@
+{
+  "name":"mongodb-server",
+  "chef_type": "role",
+  "json_class":"Chef::Role",
+  "default_attributes":{ },
+  "override_attributes":{},
+  "description":"mongodb-server's role",
+  "run_list": [
+        "recipe[apt]",
+        "recipe[git]",
+        "recipe[build-essential]",
+        "recipe[mongodb]"
+        ]
+}

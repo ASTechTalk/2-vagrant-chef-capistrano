@@ -1,0 +1,17 @@
+source "https://api.berkshelf.com"
+
+cookbook 'hostname'
+cookbook 'apt'
+cookbook 'vim'
+cookbook 'git'
+cookbook 'openssl'
+cookbook 'build-essential'
+cookbook 'nodebrew'
+cookbook 'nginx'
+cookbook 'rbenv'
+cookbook 'runit'
+cookbook 'install_from'
+cookbook 'metachef'
+cookbook 'redisio'
+cookbook 'mongodb'
+cookbook 'aws'

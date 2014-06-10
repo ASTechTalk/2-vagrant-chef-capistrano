@@ -1,0 +1,17 @@
+{
+  "name":"redis-server",
+  "chef_type": "role",
+  "json_class":"Chef::Role",
+  "default_attributes":{
+    "redisio": { 
+      "version": "2.6.17",
+      "default_settings": {"address": "0.0.0.0"}}
+  },
+  "override_attributes":{},
+  "description":"redis-server's role",
+  "run_list": [
+        "recipe[apt]",
+        "recipe[redisio::install]",
+        "recipe[redisio::enable]"
+        ]
+}
